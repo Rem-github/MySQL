@@ -171,6 +171,9 @@ SELECT 	first_name,
 SELECT COUNT(*) FROM likes WHERE target_type = 'messages' AND 
 	target_id IN (SELECT id FROM messages ORDER BY created_at DESC LIMIT 10) GROUP BY target_type;
 
-
+-- А вот так работает подсчет (случайным образом 10 последним сообщениям не попало ни одного лайка, 
+-- не мог понять..., потом проверил и одному поставил руками)
+SELECT COUNT(*) AS 'Количество' FROM likes JOIN (SELECT id FROM messages ORDER BY created_at DESC LIMIT 10) AS ms 
+	ON likes.target_type = 'messages' AND ms.id = likes.target_id;
 
 
